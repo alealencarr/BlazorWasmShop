@@ -1,85 +1,86 @@
-﻿using BlazorShop.API.Entities;
+﻿using BlazorShop.Api.Entities;
 using BlazorShop.Models.DTOs;
 
-namespace BlazorShop.API.Mappings
+namespace BlazorShop.Api.Mappings;
+
+public static class MappingDtos
 {
-    public static class MappingDtos
+    public static IEnumerable<CategoriaDto> ConverterCategoriasParaDto(
+                                            this IEnumerable<Categoria> categorias)
     {
-        public static IEnumerable<CategoryDto> CastCategoriesToDto(this IEnumerable<CategoryDto> categories)
+        return (from categoria in categorias
+                select new CategoriaDto
+                {
+                    Id = categoria.Id,
+                    Nome = categoria.Nome,
+                    IconCSS = categoria.IconCSS
+                }).ToList();
+    }
+    public static IEnumerable<ProdutoDto> ConverterProdutosParaDto(
+                                         this IEnumerable<Produto> produtos)
+    {
+        return (from produto in produtos
+                select new ProdutoDto
+                {
+                    Id = produto.Id,
+                    Nome = produto.Nome,
+                    Descricao = produto.Descricao,
+                    ImagemUrl = produto.ImagemUrl,
+                    Preco = produto.Preco,
+                    Quantidade = produto.Quantidade,
+                    CategoriaId = produto.Categoria.Id,
+                    CategoriaNome = produto.Categoria.Nome
+                }).ToList();
+    }
+    public static ProdutoDto ConverterProdutoParaDto(this Produto produto)
+    {
+        return new ProdutoDto
         {
-            return (from category in categories
-                    select new CategoryDto
-                    {
-                        Id = category.Id,
-                        Name = category.Name,
-                        IconCSS = category.IconCSS
-                    }).ToList();
-        }
+            Id = produto.Id,
+            Nome = produto.Nome,
+            Descricao = produto.Descricao,
+            ImagemUrl = produto.ImagemUrl,
+            Preco = produto.Preco,
+            Quantidade = produto.Quantidade,
+            CategoriaId = produto.Categoria.Id,
+            CategoriaNome = produto.Categoria.Nome
+        };
+    }
 
-        public static IEnumerable<ProductDto> CastProductsToDto(this IEnumerable<Product> products)
-        {
-            return (from product in products
-                    select new ProductDto
-                    {
-                        Id = product.Id,
-                        Name = product.Name,
-                        Description = product.Description,
-                        ImageUrl = product.ImageUrl,
-                        Price = product.Price,
-                        Amount = product.Amount,
-                        CategoryId = product.Category.Id,
-                        CategoryName = product.Category.Name
-                    }).ToList();
-        }
+    public static IEnumerable<CarrinhoItemDto> ConverterCarrinhoItensParaDto(
+        this IEnumerable<CarrinhoItem> carrinhoItens,IEnumerable<Produto> produtos)
+    {
+        return (from carrinhoItem in carrinhoItens
+                join produto in produtos
+                on carrinhoItem.ProdutoId equals produto.Id
+                select new CarrinhoItemDto
+                {
+                    Id = carrinhoItem.Id,
+                    ProdutoId = carrinhoItem.ProdutoId,
+                    ProdutoNome = produto.Nome,
+                    ProdutoDescricao = produto.Descricao,
+                    ProdutoImagemURL = produto.ImagemUrl,
+                    Preco = produto.Preco,
+                    CarrinhoId = carrinhoItem.CarrinhoId,
+                    Quantidade = carrinhoItem.Quantidade,
+                    PrecoTotal = produto.Preco * carrinhoItem.Quantidade
+                }).ToList();
+    }
 
-        public static ProductDto CastProductToDto(this Product product)
+    public static CarrinhoItemDto ConverterCarrinhoItemParaDto(this CarrinhoItem carrinhoItem,
+                                               Produto produto)
+    {
+        return new CarrinhoItemDto
         {
-            return ( new ProductDto
-                    {
-                        Id = product.Id,
-                        Name = product.Name,
-                        Description = product.Description,
-                        ImageUrl = product.ImageUrl,
-                        Price = product.Price,
-                        Amount = product.Amount,
-                        CategoryId = product.Category.Id,
-                        CategoryName = product.Category.Name
-                    });
-        }
-
-        public static IEnumerable<CartItemDto> CastCartItensForDto(this IEnumerable<CartItem> cartItens, IEnumerable<Product> products)
-        {
-            return (from cartItem in cartItens
-                    join product in products
-                    on cartItem.ProductId equals product.Id
-                    select new CartItemDto
-                    {
-                        Id = cartItem.Id,
-                        ProductId = cartItem.ProductId,
-                        ProductName = product.Name,
-                        ProductDescription = product.Description,
-                        ProductImageUrl = product.ImageUrl,
-                        Price = product.Price,
-                        CartId = cartItem.CartId,
-                        Amount = cartItem.Amount,
-                        PriceTotal = product.Price * cartItem.Amount
-                    }).ToList();
-        }
-
-        public static CartItemDto CastCartItemForDto(this CartItem cartItem, Product product)
-        {
-            return (new CartItemDto
-            {
-                Id = cartItem.Id,
-                ProductId = cartItem.ProductId,
-                ProductName = product.Name,
-                ProductDescription = product.Description,
-                ProductImageUrl = product.ImageUrl,
-                Price = product.Price,
-                CartId = cartItem.CartId,
-                Amount = cartItem.Amount,
-                PriceTotal = product.Price * cartItem.Amount
-            });
-        }
+            Id = carrinhoItem.Id,
+            ProdutoId = carrinhoItem.ProdutoId,
+            ProdutoNome = produto.Nome,
+            ProdutoDescricao = produto.Descricao,
+            ProdutoImagemURL = produto.ImagemUrl,
+            Preco = produto.Preco,
+            CarrinhoId = carrinhoItem.CarrinhoId,
+            Quantidade = carrinhoItem.Quantidade,
+            PrecoTotal = produto.Preco * carrinhoItem.Quantidade
+        };
     }
 }

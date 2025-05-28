@@ -1,320 +1,319 @@
-﻿using BlazorShop.API.Entities;
+﻿using BlazorShop.Api.Entities;
 using Microsoft.EntityFrameworkCore;
 
-namespace BlazorShop.API.Context
+namespace BlazorShop.Api.Context;
+
+public class AppDbContext : DbContext
 {
-    public class AppDbContext : DbContext
+    public AppDbContext(DbContextOptions<AppDbContext> options) : base(options)
+    { }
+    public DbSet<Carrinho>? Carrinhos { get; set; }
+    public DbSet<CarrinhoItem>? CarrinhoItens { get; set; }
+    public DbSet<Produto>? Produtos { get; set; }
+    public DbSet<Categoria>? Categorias { get; set; }
+    public DbSet<Usuario>? Usuarios { get; set; }
+
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        public AppDbContext(DbContextOptions<AppDbContext> options) : base(options) { }
-
-        public DbSet<Cart>? Carts { get; set; }
-        public DbSet<CartItem>? CartItens { get; set; }
-        public DbSet<Product>? Products { get; set; }
-        public DbSet<Category>? Categories { get; set; }
-        public DbSet<User>? Users { get; set; }
-
-        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        base.OnModelCreating(modelBuilder);
+        //Produtos
+        //Beleza Category
+        modelBuilder.Entity<Produto>().HasData(new Produto
         {
-            base.OnModelCreating(modelBuilder);
-            //Products
-            //Beleza Category
-            modelBuilder.Entity<Product>().HasData(new Product
-            {
-                Id = 1,
-                Name = "Glossier - Beleza Kit",
-                Description = "Um kit fornecido pela Natura, contendo Products para cuidados com a pele",
-                ImageUrl = "/Imagens/Beleza/Beleza1.png",
-                Price = 100,
-                Amount = 100,
-                CategoryId = 1
+            Id = 1,
+            Nome = "Glossier - Beleza Kit",
+            Descricao = "Um kit fornecido pela Natura, contendo produtos para cuidados com a pele",
+            ImagemUrl = "/Imagens/Beleza/Beleza1.png",
+            Preco = 100,
+            Quantidade = 100,
+            CategoriaId = 1
 
-            });
-            modelBuilder.Entity<Product>().HasData(new Product
-            {
-                Id = 2,
-                Name = "Curology - Kit para Pele",
-                Description = "Um kit fornecido pela Curology, contendo Products para cuidados com a pele",
-                ImageUrl = "/Imagens/Beleza/Beleza2.png",
-                Price = 50,
-                Amount = 45,
-                CategoryId = 1
+        });
+        modelBuilder.Entity<Produto>().HasData(new Produto
+        {
+            Id = 2,
+            Nome = "Curology - Kit para Pele",
+            Descricao = "Um kit fornecido pela Curology, contendo produtos para cuidados com a pele",
+            ImagemUrl = "/Imagens/Beleza/Beleza2.png",
+            Preco = 50,
+            Quantidade = 45,
+            CategoriaId = 1
 
-            });
-            modelBuilder.Entity<Product>().HasData(new Product
-            {
-                Id = 3,
-                Name = "Óleo de Coco Orgânico",
-                Description = "Um kit fornecido pela Glossier, contendo Products para cuidados com a pele",
-                ImageUrl = "/Imagens/Beleza/Beleza3.png",
-                Price = 20,
-                Amount = 30,
-                CategoryId = 1
+        });
+        modelBuilder.Entity<Produto>().HasData(new Produto
+        {
+            Id = 3,
+            Nome = "Óleo de Coco Orgânico",
+            Descricao = "Um kit fornecido pela Glossier, contendo produtos para cuidados com a pele",
+            ImagemUrl = "/Imagens/Beleza/Beleza3.png",
+            Preco = 20,
+            Quantidade = 30,
+            CategoriaId = 1
 
-            });
-            modelBuilder.Entity<Product>().HasData(new Product
-            {
-                Id = 4,
-                Name = "Schwarzkopf - Kit de cuidados com a pele e cabelo",
-                Description = "Um kit fornecido pela Curology, contendo Products para cuidados com a pele",
-                ImageUrl = "/Imagens/Beleza/Beleza4.png",
-                Price = 50,
-                Amount = 60,
-                CategoryId = 1
+        });
+        modelBuilder.Entity<Produto>().HasData(new Produto
+        {
+            Id = 4,
+            Nome = "Schwarzkopf - Kit de cuidados com a pele e cabelo",
+            Descricao = "Um kit fornecido pela Curology, contendo produtos para cuidados com a pele",
+            ImagemUrl = "/Imagens/Beleza/Beleza4.png",
+            Preco = 50,
+            Quantidade = 60,
+            CategoriaId = 1
 
-            });
-            modelBuilder.Entity<Product>().HasData(new Product
-            {
-                Id = 5,
-                Name = "Kit de cuidados com a pele",
-                Description = "Kit de cuidados com a pele, contendo Products para cuidados com a pele e cabelos",
-                ImageUrl = "/Imagens/Beleza/Beleza5.png",
-                Price = 30,
-                Amount = 85,
-                CategoryId = 1
+        });
+        modelBuilder.Entity<Produto>().HasData(new Produto
+        {
+            Id = 5,
+            Nome = "Kit de cuidados com a pele",
+            Descricao = "Kit de cuidados com a pele, contendo produtos para cuidados com a pele e cabelos",
+            ImagemUrl = "/Imagens/Beleza/Beleza5.png",
+            Preco = 30,
+            Quantidade = 85,
+            CategoriaId = 1
 
-            });
-            //eletronico Category
-            modelBuilder.Entity<Product>().HasData(new Product
-            {
-                Id = 6,
-                Name = "Fones de ouvidos",
-                Description = "Air Pods - fones de ouvido sem fio intra-auriculares",
-                ImageUrl = "/Imagens/Eletronicos/eletronico1.png",
-                Price = 100,
-                Amount = 120,
-                CategoryId = 3
+        });
+        //eletronico Category
+        modelBuilder.Entity<Produto>().HasData(new Produto
+        {
+            Id = 6,
+            Nome = "Fones de ouvidos",
+            Descricao = "Air Pods - fones de ouvido sem fio intra-auriculares",
+            ImagemUrl = "/Imagens/Eletronicos/eletronico1.png",
+            Preco = 100,
+            Quantidade = 120,
+            CategoriaId = 3
 
-            });
-            modelBuilder.Entity<Product>().HasData(new Product
-            {
-                Id = 7,
-                Name = "Fones de ouvido dourados",
-                Description = "Fones de ouvido dourados na orelha - esses fones de ouvido não são sem fio",
-                ImageUrl = "/Imagens/Eletronicos/eletronico2.png",
-                Price = 40,
-                Amount = 200,
-                CategoryId = 3
+        });
+        modelBuilder.Entity<Produto>().HasData(new Produto
+        {
+            Id = 7,
+            Nome = "Fones de ouvido dourados",
+            Descricao = "Fones de ouvido dourados na orelha - esses fones de ouvido não são sem fio",
+            ImagemUrl = "/Imagens/Eletronicos/eletronico2.png",
+            Preco = 40,
+            Quantidade = 200,
+            CategoriaId = 3
 
-            });
-            modelBuilder.Entity<Product>().HasData(new Product
-            {
-                Id = 8,
-                Name = "Fones de ouvido pretos",
-                Description = "Fones de ouvido pretos na orelha - esses fones de ouvido não são sem fio",
-                ImageUrl = "/Imagens/Eletronicos/eletronico3.png",
-                Price = 40,
-                Amount = 300,
-                CategoryId = 3
+        });
+        modelBuilder.Entity<Produto>().HasData(new Produto
+        {
+            Id = 8,
+            Nome = "Fones de ouvido pretos",
+            Descricao = "Fones de ouvido pretos na orelha - esses fones de ouvido não são sem fio",
+            ImagemUrl = "/Imagens/Eletronicos/eletronico3.png",
+            Preco = 40,
+            Quantidade = 300,
+            CategoriaId = 3
 
-            });
-            modelBuilder.Entity<Product>().HasData(new Product
-            {
-                Id = 9,
-                Name = "Câmera digital Sennheiser com tripé",
-                Description = "Câmera Digital Sennheiser - Câmera digital de alta qualidade fornecida pela Sennheiser - inclui tripé",
-                ImageUrl = "/Imagens/Eletronicos/eletronico4.png",
-                Price = 600,
-                Amount = 20,
-                CategoryId = 3
+        });
+        modelBuilder.Entity<Produto>().HasData(new Produto
+        {
+            Id = 9,
+            Nome = "Câmera digital Sennheiser com tripé",
+            Descricao = "Câmera Digital Sennheiser - Câmera digital de alta qualidade fornecida pela Sennheiser - inclui tripé",
+            ImagemUrl = "/Imagens/Eletronicos/eletronico4.png",
+            Preco = 600,
+            Quantidade = 20,
+            CategoriaId = 3
 
-            });
-            modelBuilder.Entity<Product>().HasData(new Product
-            {
-                Id = 10,
-                Name = "Câmera Digital Canon",
-                Description = "Canon Digital Camera - Câmera digital de alta qualidade fornecida pela Canon",
-                ImageUrl = "/Imagens/Eletronicos/eletronico5.png",
-                Price = 500,
-                Amount = 15,
-                CategoryId = 3
+        });
+        modelBuilder.Entity<Produto>().HasData(new Produto
+        {
+            Id = 10,
+            Nome = "Câmera Digital Canon",
+            Descricao = "Canon Digital Camera - Câmera digital de alta qualidade fornecida pela Canon",
+            ImagemUrl = "/Imagens/Eletronicos/eletronico5.png",
+            Preco = 500,
+            Quantidade = 15,
+            CategoriaId = 3
 
-            });
-            modelBuilder.Entity<Product>().HasData(new Product
-            {
-                Id = 11,
-                Name = "Nintendo Gameboy",
-                Description = "Gameboy - Fornecido por Nintendo",
-                ImageUrl = "/Imagens/Eletronicos/tecnologia6.png",
-                Price = 100,
-                Amount = 60,
-                CategoryId = 3
-            });
-            //Moveis Category
-            modelBuilder.Entity<Product>().HasData(new Product
-            {
-                Id = 12,
-                Name = "Cadeira de escritório de couro preto",
-                Description = "Cadeira de escritório em couro preto muito confortável",
-                ImageUrl = "/Imagens/Moveis/moveis1.png",
-                Price = 50,
-                Amount = 212,
-                CategoryId = 2
-            });
+        });
+        modelBuilder.Entity<Produto>().HasData(new Produto
+        {
+            Id = 11,
+            Nome = "Nintendo Gameboy",
+            Descricao = "Gameboy - Fornecido por Nintendo",
+            ImagemUrl = "/Imagens/Eletronicos/tecnologia6.png",
+            Preco = 100,
+            Quantidade = 60,
+            CategoriaId = 3
+        });
+        //Moveis Category
+        modelBuilder.Entity<Produto>().HasData(new Produto
+        {
+            Id = 12,
+            Nome = "Cadeira de escritório de couro preto",
+            Descricao = "Cadeira de escritório em couro preto muito confortável",
+            ImagemUrl = "/Imagens/Moveis/moveis1.png",
+            Preco = 50,
+            Quantidade = 212,
+            CategoriaId = 2
+        });
 
-            modelBuilder.Entity<Product>().HasData(new Product
-            {
-                Id = 13,
-                Name = "Cadeira de escritório de couro rosa",
-                Description = "Cadeira de escritório em couro rosa muito confortável",
-                ImageUrl = "/Imagens/Moveis/moveis2.png",
-                Price = 50,
-                Amount = 112,
-                CategoryId = 2
-            });
-            modelBuilder.Entity<Product>().HasData(new Product
-            {
-                Id = 14,
-                Name = "Espreguiçadeira",
-                Description = "Poltrona muito confortável",
-                ImageUrl = "/Imagens/Moveis/moveis3.png",
-                Price = 70,
-                Amount = 90,
-                CategoryId = 2
-            });
-            modelBuilder.Entity<Product>().HasData(new Product
-            {
-                Id = 15,
-                Name = "Silver Lounge Chair",
-                Description = "Poltrona prateada muito confortável",
-                ImageUrl = "/Imagens/Moveis/moveis4.png",
-                Price = 120,
-                Amount = 95,
-                CategoryId = 2
-            });
-            modelBuilder.Entity<Product>().HasData(new Product
-            {
-                Id = 16,
-                Name = "Luminária de mesa de porcelana",
-                Description = "Abajur de mesa de porcelana branco e azul",
-                ImageUrl = "/Imagens/Moveis/moveis6.png",
-                Price = 15,
-                Amount = 100,
-                CategoryId = 2
-            });
-            modelBuilder.Entity<Product>().HasData(new Product
-            {
-                Id = 17,
-                Name = "Office Table Lamp",
-                Description = "Abajur de mesa de escritório",
-                ImageUrl = "/Imagens/Moveis/moveis7.png",
-                Price = 20,
-                Amount = 73,
-                CategoryId = 2
-            });
-            //Calcados Category
-            modelBuilder.Entity<Product>().HasData(new Product
-            {
-                Id = 18,
-                Name = "Tênis Puma",
-                Description = "Tênis Puma confortáveis na maioria dos tamanhos",
-                ImageUrl = "/Imagens/Calcados/calcado1.png",
-                Price = 100,
-                Amount = 50,
-                CategoryId = 4
-            });
-            modelBuilder.Entity<Product>().HasData(new Product
-            {
-                Id = 19,
-                Name = "Tênis Colodiros",
-                Description = "Tênis coloridos - disponíveis na maioria dos tamanhos",
-                ImageUrl = "/Imagens/Calcados/calcado2.png",
-                Price = 150,
-                Amount = 60,
-                CategoryId = 4
-            });
-            modelBuilder.Entity<Product>().HasData(new Product
-            {
-                Id = 20,
-                Name = "Tênis Nike Azul",
-                Description = "Tênis Nike azul - disponível na maioria dos tamanhos",
-                ImageUrl = "/Imagens/Calcados/calcado3.png",
-                Price = 200,
-                Amount = 70,
-                CategoryId = 4
-            });
-            modelBuilder.Entity<Product>().HasData(new Product
-            {
-                Id = 21,
-                Name = "Tênis Hummel Coloridos",
-                Description = "Treinadores Hummel coloridos - disponíveis na maioria dos tamanhos",
-                ImageUrl = "/Imagens/Calcados/calcado4.png",
-                Price = 120,
-                Amount = 120,
-                CategoryId = 4
-            });
-            modelBuilder.Entity<Product>().HasData(new Product
-            {
-                Id = 22,
-                Name = "Tênis Nike Vermelho",
-                Description = "Tênis Nike vermelho - disponível na maioria dos tamanhos",
-                ImageUrl = "/Imagens/Calcados/calcado5.png",
-                Price = 200,
-                Amount = 100,
-                CategoryId = 4
-            });
-            modelBuilder.Entity<Product>().HasData(new Product
-            {
-                Id = 23,
-                Name = "Sandálidas Birkenstock",
-                Description = "Sandálias Birkenstock - disponíveis na maioria dos tamanhos",
-                ImageUrl = "/Imagens/Calcados/calcado6.png",
-                Price = 50,
-                Amount = 150,
-                CategoryId = 4
-            });
+        modelBuilder.Entity<Produto>().HasData(new Produto
+        {
+            Id = 13,
+            Nome = "Cadeira de escritório de couro rosa",
+            Descricao = "Cadeira de escritório em couro rosa muito confortável",
+            ImagemUrl = "/Imagens/Moveis/moveis2.png",
+            Preco = 50,
+            Quantidade = 112,
+            CategoriaId = 2
+        });
+        modelBuilder.Entity<Produto>().HasData(new Produto
+        {
+            Id = 14,
+            Nome = "Espreguiçadeira",
+            Descricao = "Poltrona muito confortável",
+            ImagemUrl = "/Imagens/Moveis/moveis3.png",
+            Preco = 70,
+            Quantidade = 90,
+            CategoriaId = 2
+        });
+        modelBuilder.Entity<Produto>().HasData(new Produto
+        {
+            Id = 15,
+            Nome = "Silver Lounge Chair",
+            Descricao = "Poltrona prateada muito confortável",
+            ImagemUrl = "/Imagens/Moveis/moveis4.png",
+            Preco = 120,
+            Quantidade = 95,
+            CategoriaId = 2
+        });
+        modelBuilder.Entity<Produto>().HasData(new Produto
+        {
+            Id = 16,
+            Nome = "Luminária de mesa de porcelana",
+            Descricao = "Abajur de mesa de porcelana branco e azul",
+            ImagemUrl = "/Imagens/Moveis/moveis6.png",
+            Preco = 15,
+            Quantidade = 100,
+            CategoriaId = 2
+        });
+        modelBuilder.Entity<Produto>().HasData(new Produto
+        {
+            Id = 17,
+            Nome = "Office Table Lamp",
+            Descricao = "Abajur de mesa de escritório",
+            ImagemUrl = "/Imagens/Moveis/moveis7.png",
+            Preco = 20,
+            Quantidade = 73,
+            CategoriaId = 2
+        });
+        //Calcados Category
+        modelBuilder.Entity<Produto>().HasData(new Produto
+        {
+            Id = 18,
+            Nome = "Tênis Puma",
+            Descricao = "Tênis Puma confortáveis na maioria dos tamanhos",
+            ImagemUrl = "/Imagens/Calcados/calcado1.png",
+            Preco = 100,
+            Quantidade = 50,
+            CategoriaId = 4
+        });
+        modelBuilder.Entity<Produto>().HasData(new Produto
+        {
+            Id = 19,
+            Nome = "Tênis Colodiros",
+            Descricao = "Tênis coloridos - disponíveis na maioria dos tamanhos",
+            ImagemUrl = "/Imagens/Calcados/calcado2.png",
+            Preco = 150,
+            Quantidade = 60,
+            CategoriaId = 4
+        });
+        modelBuilder.Entity<Produto>().HasData(new Produto
+        {
+            Id = 20,
+            Nome = "Tênis Nike Azul",
+            Descricao = "Tênis Nike azul - disponível na maioria dos tamanhos",
+            ImagemUrl = "/Imagens/Calcados/calcado3.png",
+            Preco = 200,
+            Quantidade = 70,
+            CategoriaId = 4
+        });
+        modelBuilder.Entity<Produto>().HasData(new Produto
+        {
+            Id = 21,
+            Nome = "Tênis Hummel Coloridos",
+            Descricao = "Treinadores Hummel coloridos - disponíveis na maioria dos tamanhos",
+            ImagemUrl = "/Imagens/Calcados/calcado4.png",
+            Preco = 120,
+            Quantidade = 120,
+            CategoriaId = 4
+        });
+        modelBuilder.Entity<Produto>().HasData(new Produto
+        {
+            Id = 22,
+            Nome = "Tênis Nike Vermelho",
+            Descricao = "Tênis Nike vermelho - disponível na maioria dos tamanhos",
+            ImagemUrl = "/Imagens/Calcados/calcado5.png",
+            Preco = 200,
+            Quantidade = 100,
+            CategoriaId = 4
+        });
+        modelBuilder.Entity<Produto>().HasData(new Produto
+        {
+            Id = 23,
+            Nome = "Sandálidas Birkenstock",
+            Descricao = "Sandálias Birkenstock - disponíveis na maioria dos tamanhos",
+            ImagemUrl = "/Imagens/Calcados/calcado6.png",
+            Preco = 50,
+            Quantidade = 150,
+            CategoriaId = 4
+        });
 
-            //Add users
-            modelBuilder.Entity<User>().HasData(new User
-            {
-                Id = 1,
-                Name = "Macoratti"
+        //Add users
+        modelBuilder.Entity<Usuario>().HasData(new Usuario
+        {
+            Id = 1,
+            NomeUsuario = "Macoratti"
 
-            });
-            modelBuilder.Entity<User>().HasData(new User
-            {
-                Id = 2,
-                Name = "Janice"
+        });
+        modelBuilder.Entity<Usuario>().HasData(new Usuario
+        {
+            Id = 2,
+            NomeUsuario = "Janice"
 
-            });
+        });
 
-            //Create Shopping Cart for Users
-            modelBuilder.Entity<Cart>().HasData(new Cart
-            {
-                Id = 1,
-                UserId = 1
+        //Create Shopping Carrinho for Users
+        modelBuilder.Entity<Carrinho>().HasData(new Carrinho
+        {
+            Id = 1,
+            UsuarioId = "1"
 
-            });
-            modelBuilder.Entity<Cart>().HasData(new Cart
-            {
-                Id = 2,
-                UserId = 2
+        });
+        modelBuilder.Entity<Carrinho>().HasData(new Carrinho
+        {
+            Id = 2,
+            UsuarioId = "2"
 
-            });
-            //Add Product Categories
-            modelBuilder.Entity<Category>().HasData(new Category
-            {
-                Id = 1,
-                Name = "Beleza",
-                IconCSS = "fas fa-spa"
-            });
-            modelBuilder.Entity<Category>().HasData(new Category
-            {
-                Id = 2,
-                Name = "Moveis",
-                IconCSS = "fas fa-couch"
-            });
-            modelBuilder.Entity<Category>().HasData(new Category
-            {
-                Id = 3,
-                Name = "Eletronicos",
-                IconCSS = "fas fa-headphones"
-            });
-            modelBuilder.Entity<Category>().HasData(new Category
-            {
-                Id = 4,
-                Name = "Calcados",
-                IconCSS = "fas fa-shoe-prints"
-            });
-        }
+        });
+        //Add Produto Categories
+        modelBuilder.Entity<Categoria>().HasData(new Categoria
+        {
+            Id = 1,
+            Nome = "Beleza",
+            IconCSS = "fas fa-spa"
+        });
+        modelBuilder.Entity<Categoria>().HasData(new Categoria
+        {
+            Id = 2,
+            Nome = "Moveis",
+            IconCSS = "fas fa-couch"
+        });
+        modelBuilder.Entity<Categoria>().HasData(new Categoria
+        {
+            Id = 3,
+            Nome = "Eletronicos",
+            IconCSS = "fas fa-headphones"
+        });
+        modelBuilder.Entity<Categoria>().HasData(new Categoria
+        {
+            Id = 4,
+            Nome = "Calcados",
+            IconCSS = "fas fa-shoe-prints"
+        });
     }
 }
