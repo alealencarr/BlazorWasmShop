@@ -1,4 +1,4 @@
-# BlazorShop
+# BlazorWasmShop
 
 **BlazorShop** é uma aplicação **Loja Virtual** desenvolvida com **Blazor WebAssembly**, apresentando um catálogo de produtos de forma simples e didática.
 
